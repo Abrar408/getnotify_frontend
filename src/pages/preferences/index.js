@@ -53,7 +53,7 @@ const Preferences = () => {
                 <BillingTabContent />
               </TabPane>
               <TabPane tabId='4'>
-                <PreferencesTabContent />
+                <PreferencesTabContent data={data.preferences}/>
               </TabPane>
             </TabContent>
           </Col>
