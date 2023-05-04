@@ -45,7 +45,7 @@ import {
 // ** Avatar Images
 import avatar1 from '@src/assets/images/avatars/1-small.png'
 import avatar9 from '@src/assets/images/avatars/9-small.png'
-import avatar10 from '@src/assets/images/avatars/10-small.png'
+import avatar10 from '@src/assets/images/avatars/10-small.png' 
 
 // ** Styles
 import '@styles/react/apps/app-invoice.scss'
