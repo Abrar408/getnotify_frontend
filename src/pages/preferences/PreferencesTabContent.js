@@ -7,14 +7,14 @@ const PreferencesTabContent = ({data}) => {
     
     const [updated,setUpdated] = useState(false)
     const [pref,setPref] = useState({
-        mode: null,
-        read: null,
-        link: null,
-        attachment: null,
-        send: null,
-        notification: null,
-        readCount: null,
-        linkCount: null
+        mode: data.mode,
+        read: data.read,
+        link: data.link,
+        attachment: data.attachment,
+        send: data.send,
+        notification: data.notification,
+        readCount: data.readCount,
+        linkCount: data.linkCount
     })
     const handleBooleanChange = (e) => {
         setUpdated(true)  
@@ -28,7 +28,7 @@ const PreferencesTabContent = ({data}) => {
         setUpdated(true) 
         setPref({...pref,[e.target.id] : e.target.value})
     }
-    // console.log(pref)
+    console.log(pref)
     const handleSubmit = async () => {
         // 'https://stormy-worm-scrubs.cyclic.app'
         await axios.post('https://stormy-worm-scrubs.cyclic.app/update/preferences',pref,{
@@ -204,7 +204,7 @@ const PreferencesTabContent = ({data}) => {
                                 </div>
                                 <div>
                                     {/* <Input type='number' value={readCount} onChange={(e)=>setReadCount(e.target.value<0?0:e.target.value)} id={`email_opened_count`} /> */}
-                                    <Input type='number' defaultValue={data.emailReadCount} onChange={(e)=>handleNumberChange(e)} id={`readCount`} />
+                                    <Input type='number' defaultValue={data.readCount} onChange={(e)=>handleNumberChange(e)} id={`readCount`} />
                                     
                                 </div>
                             </div>
@@ -216,7 +216,7 @@ const PreferencesTabContent = ({data}) => {
                                 </div>
                                 <div>
                                     {/* <Input type='number' value={linkCount} onChange={(e)=>setLinkCount(e.target.value<0?0:e.target.value)} id={`link_clicked_count`} /> */}
-                                    <Input type='number' defaultValue={data.linkClickedCount} onChange={(e)=>handleNumberChange(e)} id={`linkCount`} />
+                                    <Input type='number' defaultValue={data.linkCount} onChange={(e)=>handleNumberChange(e)} id={`linkCount`} />
                                     
                                 </div>
                             </div>
