@@ -5,6 +5,7 @@ import classnames from 'classnames'
 import { Row, Col, Card, CardBody, CardText, Badge, ListGroup, ListGroupItem, Button } from 'reactstrap'
 
 const PricingCards = ({ data, duration, bordered, fullWidth, cols }) => {
+  // console.log(data)
   const colsProps = cols ? cols : { md: 4, xs: 12 }
 
   const renderPricingCards = () => {
@@ -21,7 +22,7 @@ const PricingCards = ({ data, duration, bordered, fullWidth, cols }) => {
               'shadow-none': bordered,
               popular: item.popular === true,
               'border-primary': bordered && item.popular === true,
-              [`${item.title.toLowerCase()}-pricing`]: item.title
+              ['basic-pricing']: item.title
             })}
           >
             <CardBody>
@@ -38,7 +39,7 @@ const PricingCards = ({ data, duration, bordered, fullWidth, cols }) => {
               <div className='annual-plan'>
                 <div className='plan-price mt-2'>
                   <sup className='font-medium-1 fw-bold text-primary me-25'>$</sup>
-                  <span className={`pricing-${item.title.toLowerCase()}-value fw-bolder text-primary`}>
+                  <span className={`pricing-basic-value fw-bolder text-primary`}>
                     {monthlyPrice}
                   </span>
                   <span className='pricing-duration text-body font-medium-1 fw-bold ms-25'>/month</span>
