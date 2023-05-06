@@ -33,7 +33,10 @@ const PreferencesTabContent = ({data}) => {
         // 'https://stormy-worm-scrubs.cyclic.app'
         await axios.post('https://stormy-worm-scrubs.cyclic.app/update/preferences',pref,{
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Methods': '*',
+                'Access-Control-Allow-Headers': '*'
             }
         })
         .then(res => setUpdated(false))
