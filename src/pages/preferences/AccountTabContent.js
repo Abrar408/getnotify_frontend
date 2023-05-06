@@ -6,7 +6,7 @@ import Select from 'react-select'
 import Cleave from 'cleave.js/react'
 import { useForm, Controller } from 'react-hook-form'
 import 'cleave.js/dist/addons/cleave-phone.us'
-
+import avatar11 from '@src/assets/images/portrait/small/avatar-s-11.jpg'
 // ** Reactstrap Imports
 import { Row, Col, Form, Card, Input, Label, Button, CardBody, CardTitle, CardHeader, FormFeedback } from 'reactstrap'
 
@@ -15,6 +15,7 @@ import { selectThemeColors } from '@utils'
 
 // ** Demo Components
 import DeleteAccount from './DeleteAccount'
+import axios from 'axios'
 
 const countryOptions = [
   { value: 'uk', label: 'UK' },
@@ -69,8 +70,8 @@ const timeZoneOptions = [
 const AccountTabs = ({ data }) => {
   // ** Hooks
   const defaultValues = {
-    lastName: '',
-    firstName: data.fullName.split(' ')[0]
+    lastName: data.lastname,
+    firstName: data.firstname
   }
   const {
     control,
@@ -81,12 +82,14 @@ const AccountTabs = ({ data }) => {
 
   // ** States
   // const [avatar, setAvatar] = useState(data.avatar ? data.avatar : '')
-  const avatar =''
+  const avatar = avatar11
   const onChange = e => {
     const reader = new FileReader(),
       files = e.target.files
     reader.onload = function () {
       setAvatar(reader.result)
+      // setUser({...user, avatar: reader.result})
+      console.log(files,reader.result)
     }
     reader.readAsDataURL(files[0])
   }
@@ -108,6 +111,42 @@ const AccountTabs = ({ data }) => {
   const handleImgReset = () => {
     setAvatar('@src/assets/images/avatars/avatar-blank.png')
   }
+  const [user,setUser] = useState(
+    {
+      avatar: data.avatar,
+      firstname: data.firstname,
+      lastname: data.lastname,
+      email: data.email,
+      company: data.company,
+      phone: data.phone,
+      address: data.address,
+      state: data.state,
+      zipCode: data.zipCode,
+      country: data.country,
+      language: data.language,
+      timezone: data.timezone,
+      currency: data.currency,
+      }
+)
+console.log(user)
+const handleCountryChange = (e) => {
+  setUser({...user, country: e})
+}
+const handleLanguageChange = (e) => {
+  setUser({...user, language: e})
+}
+const handleTimezoneChange = (e) => {
+  setUser({...user, timezone: e})
+}
+const handleCurrencyChange = (e) => {
+  setUser({...user, currency: e})
+}
+const updateInfo = async (e) => {
+  e.preventDefault()
+  await axios.post('https://stormy-worm-scrubs.cyclic.app/update/info',user)
+  .then(res => console.log(res))
+  .catch(err => console.log(err))
+}
 
   return (
     <Fragment>
@@ -122,86 +161,91 @@ const AccountTabs = ({ data }) => {
             </div>
             <div className='d-flex align-items-end mt-75 ms-1'>
               <div>
-                <Button tag={Label} className='mb-75 me-75' size='sm' color='primary'>
+                <Button disabled tag={Label} className='mb-75 me-75' size='sm' color='primary'>
                   Upload
                   <Input type='file' onChange={onChange} hidden accept='image/*' />
                 </Button>
-                <Button className='mb-75' color='secondary' size='sm' outline onClick={handleImgReset}>
+                {/* <Button className='mb-75' color='secondary' size='sm' outline onClick={handleImgReset}>
                   Reset
-                </Button>
+                </Button> */}
                 <p className='mb-0'>Allowed JPG, GIF or PNG. Max size of 800kB</p>
               </div>
             </div>
           </div>
-          <Form className='mt-2 pt-50' onSubmit={handleSubmit(onSubmit)}>
+          <Form className='mt-2 pt-50' onSubmit={(e)=>updateInfo(e)}>
             <Row>
               <Col sm='6' className='mb-1'>
                 <Label className='form-label' for='firstName'>
                   First Name
                 </Label>
-                <Controller
+                <Input id='firstname' type='text' name='firstname' placeholder='John' defaultValue={data.firstname} onChange={(e)=>setUser({...user,[e.target.id]:e.target.value})}/>
+                {/* <Controller
                   name='firstName'
                   control={control}
                   render={({ field }) => (
-                    <Input id='firstName' placeholder='John' invalid={errors.firstName && true} {...field} />
+                    <Input id='firstname' placeholder='John' invalid={errors.firstName && true} {...field} onChange={(e)=>setUser({...user,[e.target.id]:e.target.value})} />
                   )}
-                />
+                /> */}
                 {errors && errors.firstName && <FormFeedback>Please enter a valid First Name</FormFeedback>}
               </Col>
               <Col sm='6' className='mb-1'>
                 <Label className='form-label' for='lastName'>
                   Last Name
                 </Label>
-                <Controller
+                <Input id='lastname' type='text' name='lastname' placeholder='Doe' defaultValue={data.lastname} onChange={(e)=>setUser({...user,[e.target.id]:e.target.value})}/>
+                {/* <Controller
                   name='lastName'
                   control={control}
                   render={({ field }) => (
-                    <Input id='lastName' placeholder='Doe' invalid={errors.lastName && true} {...field} />
+                    <Input id='lastname' placeholder='Doe' invalid={errors.lastName && true} {...field} onChange={(e)=>setUser({...user,[e.target.id]:e.target.value})}/>
                   )}
-                />
+                /> */}
                 {errors.lastName && <FormFeedback>Please enter a valid Last Name</FormFeedback>}
               </Col>
               <Col sm='6' className='mb-1'>
                 <Label className='form-label' for='emailInput'>
                   E-mail
                 </Label>
-                <Input id='emailInput' type='email' name='email' placeholder='Email' defaultValue={data.email} />
+                <Input id='email' type='email' name='email' placeholder='Email' defaultValue={data.email} onChange={(e)=>setUser({...user,[e.target.id]:e.target.value})}/>
               </Col>
               <Col sm='6' className='mb-1'>
                 <Label className='form-label' for='company'>
                   Company
                 </Label>
-                <Input defaultValue={data.company} id='company' name='company' placeholder='Company Name' />
+                <Input defaultValue={data.company} id='company' name='company' placeholder='Company Name' onChange={(e)=>setUser({...user,[e.target.id]:e.target.value})}/>
               </Col>
               <Col sm='6' className='mb-1'>
-                <Label className='form-label' for='phNumber'>
+                <Label className='form-label' for='phone'>
                   Phone Number
                 </Label>
-                <Cleave
-                  id='phNumber'
+                <Input defaultValue={data.phone} id='phone' name='phone' placeholder='111 111 111' onChange={(e)=>setUser({...user,[e.target.id]:e.target.value})}/>
+                {/* <Cleave
+                  id='contact'
                   name='phNumber'
                   className='form-control'
                   placeholder='1 234 567 8900'
                   options={{ phone: true, phoneRegionCode: 'US' }}
-                />
+                  defaultValue={data.contact}
+                  onChange={(e)=>setUser({...user,[e.target.id]:e.target.value})}
+                /> */}
               </Col>
               <Col sm='6' className='mb-1'>
                 <Label className='form-label' for='address'>
                   Address
                 </Label>
-                <Input id='address' name='address' placeholder='12, Business Park' />
+                <Input id='address' name='address' placeholder='12, Business Park' defaultValue={data.address} onChange={(e)=>setUser({...user,[e.target.id]:e.target.value})}/>
               </Col>
               <Col sm='6' className='mb-1'>
                 <Label className='form-label' for='accountState'>
                   State
                 </Label>
-                <Input id='accountState' name='state' placeholder='California' />
+                <Input id='state' name='state' placeholder='California' defaultValue={data.state} onChange={(e)=>setUser({...user,[e.target.id]:e.target.value})}/>
               </Col>
               <Col sm='6' className='mb-1'>
                 <Label className='form-label' for='zipCode'>
                   Zip Code
                 </Label>
-                <Input id='zipCode' name='zipCode' placeholder='123456' maxLength='6' />
+                <Input id='zipCode' name='zipCode' placeholder='123456' maxLength='6' defaultValue={data.zipCode} onChange={(e)=>setUser({...user,[e.target.id]:e.target.value})}/>
               </Col>
               <Col sm='6' className='mb-1'>
                 <Label className='form-label' for='country'>
@@ -214,7 +258,8 @@ const AccountTabs = ({ data }) => {
                   classNamePrefix='select'
                   options={countryOptions}
                   theme={selectThemeColors}
-                  defaultValue={countryOptions[0]}
+                  defaultValue={countryOptions.filter(country => country.value === data.country)}
+                  onChange={(e)=>handleCountryChange(e.value)}
                 />
               </Col>
               <Col sm='6' className='mb-1'>
@@ -228,7 +273,8 @@ const AccountTabs = ({ data }) => {
                   classNamePrefix='select'
                   options={languageOptions}
                   theme={selectThemeColors}
-                  defaultValue={languageOptions[0]}
+                  defaultValue={languageOptions.filter(language => language.value === data.language)}
+                  onChange={(e)=>handleLanguageChange(e.value)}
                 />
               </Col>
               <Col sm='6' className='mb-1'>
@@ -236,13 +282,14 @@ const AccountTabs = ({ data }) => {
                   Timezone
                 </Label>
                 <Select
-                  id='timeZone'
+                  id='timezone'
                   isClearable={false}
                   className='react-select'
                   classNamePrefix='select'
                   options={timeZoneOptions}
                   theme={selectThemeColors}
-                  defaultValue={timeZoneOptions[0]}
+                  defaultValue={timeZoneOptions.filter(timezone => timezone.value === data.timezone)}
+                  onChange={(e)=>handleTimezoneChange(e.value)}
                 />
               </Col>
               <Col sm='6' className='mb-1'>
@@ -256,16 +303,17 @@ const AccountTabs = ({ data }) => {
                   classNamePrefix='select'
                   options={currencyOptions}
                   theme={selectThemeColors}
-                  defaultValue={currencyOptions[0]}
+                  defaultValue={currencyOptions.filter(currency => currency.value === data.currency)}
+                  onChange={(e)=>handleCurrencyChange(e.value)}
                 />
               </Col>
               <Col className='mt-2' sm='12'>
                 <Button type='submit' className='me-1' color='primary'>
                   Save changes
                 </Button>
-                <Button color='secondary' outline>
+                {/* <Button color='secondary' outline>
                   Discard
-                </Button>
+                </Button> */}
               </Col>
             </Row>
           </Form>

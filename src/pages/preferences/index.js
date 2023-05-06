@@ -24,7 +24,7 @@ const Preferences = () => {
     const [activeTab, setActiveTab] = useState('1')
     const [data, setData] = useState(null)
 
-    const toggleTab = tab => {
+    const toggleTab = tab => { 
         // console.log(tab)
         setActiveTab(tab)
     }
