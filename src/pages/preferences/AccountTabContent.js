@@ -80,8 +80,8 @@ const AccountTabs = ({ data }) => {
   } = useForm({ defaultValues })
 
   // ** States
-  const [avatar, setAvatar] = useState(data.avatar ? data.avatar : '')
-
+  // const [avatar, setAvatar] = useState(data.avatar ? data.avatar : '')
+  const avatar =''
   const onChange = e => {
     const reader = new FileReader(),
       files = e.target.files
