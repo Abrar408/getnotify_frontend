@@ -30,7 +30,7 @@ const Preferences = () => {
     }
 
     useEffect(() => {
-        axios.get('http://localhost:3002/account').then(response => setData(JSON.parse(response.data.data)))
+        axios.get('https://stormy-worm-scrubs.cyclic.app/account').then(response => setData(JSON.parse(response.data.data)))
     }, [])
 
   return (
