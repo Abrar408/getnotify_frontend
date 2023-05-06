@@ -28,7 +28,7 @@ const PreferencesTabContent = ({data}) => {
         setUpdated(true) 
         setPref({...pref,[e.target.id] : e.target.value})
     }
-    console.log(pref)
+    // console.log(pref)
     const handleSubmit = async () => {
         // 'https://stormy-worm-scrubs.cyclic.app'
         await axios.post('https://stormy-worm-scrubs.cyclic.app/update/preferences',pref,{
