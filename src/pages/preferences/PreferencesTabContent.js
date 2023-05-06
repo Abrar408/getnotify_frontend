@@ -31,7 +31,7 @@ const PreferencesTabContent = ({data}) => {
     console.log(pref)
     const handleSubmit = async () => {
         // 'https://stormy-worm-scrubs.cyclic.app'
-        await axios.post('https://stormy-worm-scrubs.cyclic.app/update/preferences',pref)
+        await axios.post('http://localhost:3002/update/preferences',pref)
         .then(res => setUpdated(false))
         .catch(err => console.log(err))
     }
@@ -55,7 +55,7 @@ const PreferencesTabContent = ({data}) => {
                                     <span>{`advance mode lets you keep track of ...`}</span>
                                 </div>
                                 <div className='form-switch'>
-                                    <Input type='switch' defaultChecked={`${data.mode}`} onChange={(e)=>handleBooleanChange(e)} id={`mode`} />
+                                    <Input type='switch' defaultChecked={data.mode} onChange={(e)=>handleBooleanChange(e)} id={`mode`} />
                                     <Label className='form-check-label' for={`mode`}>
                                     <span className='switch-icon-left'>
                                         <Check size={14} />
