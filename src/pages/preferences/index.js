@@ -30,7 +30,7 @@ const Preferences = () => {
     }
 
     useEffect(() => {
-        axios.get('https://getnotifybackend-production.up.railway.app/account').then(response => setData(JSON.parse(response.data.data)))
+        axios.get('https://stormy-worm-scrubs.cyclic.app/account').then(response => setData(JSON.parse(response.data.data)))
     }, [])
 
   return (

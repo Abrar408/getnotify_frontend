@@ -31,7 +31,7 @@ const PreferencesTabContent = ({data}) => {
     console.log(pref)
     const handleSubmit = async () => {
         // 'https://stormy-worm-scrubs.cyclic.app'
-        await axios.post('https://getnotifybackend-production.up.railway.app/update/preferences',pref)
+        await axios.post('https://stormy-worm-scrubs.cyclic.app/update/preferences',pref)
         .then(res => setUpdated(false))
         .catch(err => console.log(err))
     }
