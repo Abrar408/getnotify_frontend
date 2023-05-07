@@ -42,7 +42,7 @@ const NavbarUser = () => {
   // })
   // socket.disconnect()
   useEffect(() =>{
-    socket =io("http://localhost:5500")
+    socket =io("https://stormy-worm-scrubs.cyclic.app:5500")
     // socket.on("connect",()=>{
     //   console.log("socket connected")
     // })
