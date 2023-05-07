@@ -1,13 +1,19 @@
 // ** React Imports
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 
 // ** Custom Components
 import Avatar from "@components/avatar";
-
+import toast from 'react-hot-toast'
 // ** Third Party Components
 import classnames from "classnames";
 import PerfectScrollbar from "react-perfect-scrollbar";
 import { Bell, X, Check, AlertTriangle } from "react-feather";
+
+import {io} from 'socket.io-client'
+
+const socket =io("http://localhost:5500")  
+
+
 
 // ** Reactstrap Imports
 import {
@@ -24,8 +30,44 @@ import {
 import avatar3 from "@src/assets/images/portrait/small/avatar-s-3.jpg";
 import avatar15 from "@src/assets/images/portrait/small/avatar-s-15.jpg";
 
-const NotificationDropdown = () => {
+const NotificationDropdown = ({noti,count}) => { 
+  // console.log(noti,count)
+  // console.log('render')
+  // const [notificationCount,setNotiCount] = useState(0)
+  // const [_notificationsArray,setNoti] = useState([{
+  //   avatarContent: "AB",
+  //   color: "light-danger",
+  //   subtitle: "email is not being tracked",
+  //   title: (
+  //     <p className="media-heading">
+  //       <span className="fw-bolder">Email not tracked</span>
+  //     </p>
+  //   ),
+  // }])
+  // socket.on('connect',()=>{
+  //   setNotificationCount(notificationCount + 1) 
+  // })
+  // socket.on('notification',(data)=>{
+  //   console.log('notification')
+  //   setNoti([{
+  //     avatarContent: data.name,
+  //     color: data.color,
+  //     subtitle: data.sub,
+  //     title: (
+  //       <p className="media-heading">
+  //         <span className="fw-bolder">{data.title}</span>
+  //       </p>
+  //     ),
+  //   },..._notificationsArray])
+  //   setNotiCount(notificationCount  + 1)
+  //   toast.success(data.sub, {
+  //     position: 'bottom-right'
+  //   })    
+  // })
   // ** Notification Array
+  
+  
+  // console.log(_notificationsArray)
   const notificationsArray = [
     {
       img: avatar3,
@@ -111,7 +153,7 @@ const NotificationDropdown = () => {
           wheelPropagation: false,
         }}
       >
-        {notificationsArray.map((item, index) => {
+        {noti.slice(0,5).map((item, index) => {
           return (
             <a
               key={index}
@@ -174,6 +216,7 @@ const NotificationDropdown = () => {
     <UncontrolledDropdown
       tag="li"
       className="dropdown-notification nav-item me-25"
+      // onClick={()=>setNotiCount(0)}
     >
       <DropdownToggle
         tag="a"
@@ -182,17 +225,18 @@ const NotificationDropdown = () => {
         onClick={(e) => e.preventDefault()}
       >
         <Bell size={21} />
-        <Badge pill color="danger" className="badge-up">
-          5
-        </Badge>
+        {count>0 && <Badge pill color="danger" className="badge-up">
+          {count}
+          </Badge>}
+        
       </DropdownToggle>
       <DropdownMenu end tag="ul" className="dropdown-menu-media mt-0">
         <li className="dropdown-menu-header">
           <DropdownItem className="d-flex" tag="div" header>
             <h4 className="notification-title mb-0 me-auto">Notifications</h4>
-            <Badge tag="div" color="light-primary" pill>
-              6 New
-            </Badge>
+            {/* <Badge tag="div" color="light-primary" pill>
+            {notificationCount} New
+            </Badge> */}
           </DropdownItem>
         </li>
         {renderNotificationItems()}

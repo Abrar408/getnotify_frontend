@@ -128,7 +128,7 @@ const AccountTabs = ({ data }) => {
       currency: data.currency,
       }
 )
-console.log(user)
+// console.log(user)
 const handleCountryChange = (e) => {
   setUser({...user, country: e})
 }
@@ -143,7 +143,7 @@ const handleCurrencyChange = (e) => {
 }
 const updateInfo = async (e) => {
   e.preventDefault()
-  await axios.post('https://stormy-worm-scrubs.cyclic.app/update/info',user)
+  await axios.post('http://localhost:3002/update/info',user)
   .then(res => console.log(res))
   .catch(err => console.log(err))
 }
